@@ -2,27 +2,24 @@ use {
     anchor_lang::prelude::*,
     anchor_spl::{
         metadata::{
-            create_metadata_accounts_v3, mpl_token_metadata::types::DataV2,
-            CreateMetadataAccountsV3, Metadata,
+            mpl_token_metadata::types::DataV2, update_metadata_accounts_v2, Metadata,
+            UpdateMetadataAccountsV2,
         },
         token::{Mint, Token},
     },
 };
 
 #[derive(Accounts)]
-#[instruction(seed: Pubkey, decimals: u8)]
-pub struct CreateToken<'info> {
+#[instruction(seed: Pubkey)]
+pub struct UpdateToken<'info> {
     #[account(mut)]
     pub payer: Signer<'info>,
 
     // Create mint account
     // Same PDA as address of the account and mint
     #[account(
-        init,
         seeds = [b"mint", seed.key().as_ref()],
         bump,
-        payer = payer,
-        mint::decimals = decimals,
         mint::authority = mint_account.key(),
     )]
     pub mint_account: Account<'info, Mint>,
@@ -42,10 +39,9 @@ pub struct CreateToken<'info> {
     pub rent: Sysvar<'info, Rent>,
 }
 
-pub fn create_token(
-    ctx: Context<CreateToken>,
+pub fn update_token(
+    ctx: Context<UpdateToken>,
     seed: Pubkey,
-    _decimals: u8,
     meta_name: String,
     meta_symbol: String,
     meta_uri: String,
@@ -55,21 +51,17 @@ pub fn create_token(
 
     // Cross Program Invocation (CPI) signed by PDA
     // Invoking the create_metadata_account_v3 instruction on the token metadata program
-    create_metadata_accounts_v3(
+    update_metadata_accounts_v2(
         CpiContext::new(
             ctx.accounts.token_metadata_program.to_account_info(),
-            CreateMetadataAccountsV3 {
+            UpdateMetadataAccountsV2 {
                 metadata: ctx.accounts.metadata_account.to_account_info(),
-                mint: ctx.accounts.mint_account.to_account_info(),
-                mint_authority: ctx.accounts.mint_account.to_account_info(), // PDA is mint authority
                 update_authority: ctx.accounts.mint_account.to_account_info(), // PDA is update authority
-                payer: ctx.accounts.payer.to_account_info(),
-                system_program: ctx.accounts.system_program.to_account_info(),
-                rent: ctx.accounts.rent.to_account_info(),
             },
         )
         .with_signer(signer_seeds),
-        DataV2 {
+        Some(ctx.accounts.mint_account.key()),
+        Some(DataV2 {
             name: meta_name,
             symbol: meta_symbol,
             uri: meta_uri,
@@ -77,10 +69,9 @@ pub fn create_token(
             creators: None,
             collection: None,
             uses: None,
-        },
-        true, // Is mutable
-        true, // Update authority is signer
-        None, // Collection details
+        }),
+        Some(false), // Is mutable
+        Some(true),  // Update authority is signer
     )?;
 
     Ok(())

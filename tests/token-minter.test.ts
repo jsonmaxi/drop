@@ -57,9 +57,6 @@ describe("Token Faucet", async () => {
   it("Create a token!", async () => {
     await program.methods
       .createToken(seed, 5, metadata.name, metadata.symbol, metadata.uri)
-      .accounts({
-        payer: payer.publicKey,
-      })
       .rpc();
 
     expect(await getMint(context.banksClient, mintPDA)).toMatchObject({
@@ -84,16 +81,12 @@ describe("Token Faucet", async () => {
   });
 
   it("Mint 1 Token!", async () => {
-    // Derive the associated token address account for the mint and payer.
     const associatedTokenAccountAddress = getAssociatedTokenAddressSync(
       mintPDA,
       payer.publicKey
     );
 
-    await program.methods
-      .mintToken(seed, new anchor.BN(1_000_000))
-      .accounts({ payer: payer.publicKey })
-      .rpc();
+    await program.methods.mintToken(seed, new anchor.BN(1_000_000)).rpc();
 
     expect(
       await getAccount(context.banksClient, associatedTokenAccountAddress)
@@ -101,6 +94,24 @@ describe("Token Faucet", async () => {
       amount: 1_000_000n,
       mint: mintPDA,
       owner: payer.publicKey,
+    });
+  });
+
+  it("Can update token metadata", async () => {
+    await program.methods
+      .updateToken(seed, "USD Coin", "USDC", "https://solana.com")
+      .rpc();
+
+    expect(
+      deserializeMetadata(
+        (await context.banksClient.getAccount(metadataPDA)) as any
+      )
+    ).toMatchObject({
+      mint: mintPDA.toString(),
+      name: "USD Coin",
+      symbol: "USDC",
+      uri: "https://solana.com",
+      sellerFeeBasisPoints: 0,
     });
   });
 });
