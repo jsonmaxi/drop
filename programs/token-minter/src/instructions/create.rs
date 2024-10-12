@@ -10,7 +10,7 @@ use {
 };
 
 #[derive(Accounts)]
-#[instruction(seed: String, decimals: u8)]
+#[instruction(seed: Pubkey, decimals: u8)]
 pub struct CreateToken<'info> {
     #[account(mut)]
     pub payer: Signer<'info>,
@@ -19,7 +19,7 @@ pub struct CreateToken<'info> {
     // Same PDA as address of the account and mint
     #[account(
         init,
-        seeds = [b"mint", seed.as_bytes()],
+        seeds = [b"mint", seed.key().as_ref()],
         bump,
         payer = payer,
         mint::decimals = decimals,
@@ -44,14 +44,14 @@ pub struct CreateToken<'info> {
 
 pub fn create_token(
     ctx: Context<CreateToken>,
-    seed: String,
+    seed: Pubkey,
     _decimals: u8,
     meta_name: String,
     meta_symbol: String,
     meta_uri: String,
 ) -> Result<()> {
     // PDA signer seeds
-    let signer_seeds: &[&[&[u8]]] = &[&[b"mint", seed.as_bytes(), &[ctx.bumps.mint_account]]];
+    let signer_seeds: &[&[&[u8]]] = &[&[b"mint", seed.as_ref(), &[ctx.bumps.mint_account]]];
 
     // Cross Program Invocation (CPI) signed by PDA
     // Invoking the create_metadata_account_v3 instruction on the token metadata program

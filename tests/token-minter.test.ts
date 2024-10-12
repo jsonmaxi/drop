@@ -31,11 +31,11 @@ describe("Token Faucet", async () => {
   const payer = provider.wallet as anchor.Wallet;
   const program = new anchor.Program<TokenMinter>(IDL as TokenMinter, provider);
 
-  const seed = "USDC";
+  const seed = new PublicKey("So11111111111111111111111111111111111111112");
   // Derive the PDA to use as mint account address.
   // This same PDA is also used as the mint authority.
   const [mintPDA] = PublicKey.findProgramAddressSync(
-    [Buffer.from("mint"), Buffer.from(seed)],
+    [Buffer.from("mint"), seed.toBuffer()],
     program.programId
   );
 

@@ -2,7 +2,7 @@ use anchor_lang::prelude::*;
 use instructions::*;
 pub mod instructions;
 
-declare_id!("CzD1FVVrzZs22deQaNKtCjJrGoRy6FjTznN581KNJVt9");
+declare_id!("dropagFgVwSccspYMgMqgyzTBbB9S9XLZ8ckUoYRJ8U");
 
 #[program]
 pub mod token_minter {
@@ -10,7 +10,7 @@ pub mod token_minter {
 
     pub fn create_token(
         ctx: Context<CreateToken>,
-        seed: String,
+        seed: Pubkey,
         decimals: u8,
         token_name: String,
         token_symbol: String,
@@ -19,7 +19,7 @@ pub mod token_minter {
         create::create_token(ctx, seed, decimals, token_name, token_symbol, token_uri)
     }
 
-    pub fn mint_token(ctx: Context<MintToken>, seed: String, amount: u64) -> Result<()> {
+    pub fn mint_token(ctx: Context<MintToken>, seed: Pubkey, amount: u64) -> Result<()> {
         mint::mint_token(ctx, seed, amount)
     }
 }

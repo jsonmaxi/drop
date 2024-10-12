@@ -7,7 +7,7 @@ use {
 };
 
 #[derive(Accounts)]
-#[instruction(seed: String)]
+#[instruction(seed: Pubkey)]
 pub struct MintToken<'info> {
     #[account(mut)]
     pub payer: Signer<'info>,
@@ -15,7 +15,7 @@ pub struct MintToken<'info> {
     // Mint account address is a PDA
     #[account(
         mut,
-        seeds = [b"mint", seed.as_bytes()],
+        seeds = [b"mint", seed.key().as_ref()],
         bump
     )]
     pub mint_account: Account<'info, Mint>,
@@ -35,9 +35,9 @@ pub struct MintToken<'info> {
     pub system_program: Program<'info, System>,
 }
 
-pub fn mint_token(ctx: Context<MintToken>, seed: String, amount: u64) -> Result<()> {
+pub fn mint_token(ctx: Context<MintToken>, seed: Pubkey, amount: u64) -> Result<()> {
     // PDA signer seeds
-    let signer_seeds: &[&[&[u8]]] = &[&[b"mint", seed.as_bytes(), &[ctx.bumps.mint_account]]];
+    let signer_seeds: &[&[&[u8]]] = &[&[b"mint", seed.as_ref(), &[ctx.bumps.mint_account]]];
 
     // Invoke the mint_to instruction on the token program
     mint_to(
