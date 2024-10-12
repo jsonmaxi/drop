@@ -1,0 +1,6 @@
+{
+  "name": "Wrapped USDC (Allbridge from BSC)",
+  "symbol": "abUSDC",
+  "description": "Mock of abUSDC (8XSsNvaKU9FDhYWAv7Yc7qSNwuJSzVrXBNEk7AFiWF69)",
+  "image": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/BXXkv6z8ykpG1yuvUDPgh732wzVHB69RnB9YgSYh3itW/logo.png"
+}

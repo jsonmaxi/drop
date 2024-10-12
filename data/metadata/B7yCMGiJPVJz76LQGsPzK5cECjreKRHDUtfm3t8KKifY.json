@@ -1,0 +1,6 @@
+{
+  "name": "Wrapped BTC (Portal)",
+  "symbol": "WBTC",
+  "description": "Mock of WBTC (3NZ9JMVBmGAqocybic2c7LQCJScmgsAZ6vQqTDzcqmJh)",
+  "image": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/3NZ9JMVBmGAqocybic2c7LQCJScmgsAZ6vQqTDzcqmJh/logo.png"
+}

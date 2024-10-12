@@ -1,0 +1,6 @@
+{
+  "name": "Wrapped USDC (Allbridge from Polygon)",
+  "symbol": "apUSDC",
+  "description": "Mock of apUSDC (eqKJTf1Do4MDPyKisMYqVaUFpkEFAs3riGF3ceDH2Ca)",
+  "image": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/BXXkv6z8ykpG1yuvUDPgh732wzVHB69RnB9YgSYh3itW/logo.png"
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Binance USD (Wormhole v1)",
+  "symbol": "wBUSD_v1",
+  "description": "Mock of wBUSD_v1 (AJ1W9A9N9dEMdVyoDiam2rV44gnBm2csrPDP7xqcapgX)",
+  "image": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/AJ1W9A9N9dEMdVyoDiam2rV44gnBm2csrPDP7xqcapgX/logo.png"
+}

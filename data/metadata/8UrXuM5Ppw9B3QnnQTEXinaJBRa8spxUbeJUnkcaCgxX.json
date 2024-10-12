@@ -1,0 +1,6 @@
+{
+  "name": "Wrapped BUSD (Allbridge from BSC)",
+  "symbol": "abBUSD",
+  "description": "Mock of abBUSD (6nuaX3ogrr2CaoAPjtaKHAoBNWok32BMcRozuf32s2QF)",
+  "image": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/AJ1W9A9N9dEMdVyoDiam2rV44gnBm2csrPDP7xqcapgX/logo.png"
+}

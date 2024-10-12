@@ -1,0 +1,6 @@
+{
+  "name": "HUSD Stablecoin (Wormhole v1)",
+  "symbol": "wHUSD_v1",
+  "description": "Mock of wHUSD_v1 (BybpSTBoZHsmKnfxYG47GDhVPKrnEKX31CScShbrzUhX)",
+  "image": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/BybpSTBoZHsmKnfxYG47GDhVPKrnEKX31CScShbrzUhX/logo.png"
+}

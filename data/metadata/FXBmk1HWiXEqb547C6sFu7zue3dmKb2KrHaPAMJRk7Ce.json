@@ -1,0 +1,6 @@
+{
+  "name": "Wrapped USDC (Allbridge from Celo)",
+  "symbol": "acUSDC",
+  "description": "Mock of acUSDC (DHpoYejUDqzByb6HAdaLWF7KZvwUv2vWYDY9cTENNZui)",
+  "image": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png"
+}

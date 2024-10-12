@@ -1,0 +1,6 @@
+{
+  "name": "Wrapped USDC (Allbridge from Ethereum)",
+  "symbol": "aeUSDC",
+  "description": "Mock of aeUSDC (DdFPRnccQqLD4zCHrBqdY95D6hvw6PLWp9DEXj1fLCL9)",
+  "image": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png"
+}
