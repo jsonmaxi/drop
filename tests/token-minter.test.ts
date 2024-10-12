@@ -13,7 +13,7 @@ import { getAccount, getMint } from "spl-token-bankrun";
 
 const PROGRAM_ID = new PublicKey(IDL.address);
 const METADATA_PROGRAM_ID = new PublicKey(
-  "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
+  "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s",
 );
 
 describe("Token Faucet", async () => {
@@ -23,7 +23,7 @@ describe("Token Faucet", async () => {
       { name: "token_minter", programId: PROGRAM_ID },
       { name: "token_metadata", programId: METADATA_PROGRAM_ID },
     ],
-    []
+    [],
   );
   const provider = new BankrunProvider(context);
   anchor.setProvider(provider);
@@ -36,7 +36,7 @@ describe("Token Faucet", async () => {
   // This same PDA is also used as the mint authority.
   const [mintPDA] = PublicKey.findProgramAddressSync(
     [Buffer.from("mint"), seed.toBuffer()],
-    program.programId
+    program.programId,
   );
 
   const [metadataPDA] = PublicKey.findProgramAddressSync(
@@ -45,7 +45,7 @@ describe("Token Faucet", async () => {
       METADATA_PROGRAM_ID.toBuffer(),
       mintPDA.toBuffer(),
     ],
-    METADATA_PROGRAM_ID
+    METADATA_PROGRAM_ID,
   );
 
   const metadata = {
@@ -69,8 +69,8 @@ describe("Token Faucet", async () => {
 
     expect(
       deserializeMetadata(
-        (await context.banksClient.getAccount(metadataPDA)) as any
-      )
+        (await context.banksClient.getAccount(metadataPDA)) as any,
+      ),
     ).toMatchObject({
       mint: mintPDA.toString(),
       name: metadata.name,
@@ -83,13 +83,13 @@ describe("Token Faucet", async () => {
   it("Mint 1 Token!", async () => {
     const associatedTokenAccountAddress = getAssociatedTokenAddressSync(
       mintPDA,
-      payer.publicKey
+      payer.publicKey,
     );
 
     await program.methods.mintToken(seed, new anchor.BN(1_000_000)).rpc();
 
     expect(
-      await getAccount(context.banksClient, associatedTokenAccountAddress)
+      await getAccount(context.banksClient, associatedTokenAccountAddress),
     ).toMatchObject({
       amount: 1_000_000n,
       mint: mintPDA,
@@ -104,8 +104,8 @@ describe("Token Faucet", async () => {
 
     expect(
       deserializeMetadata(
-        (await context.banksClient.getAccount(metadataPDA)) as any
-      )
+        (await context.banksClient.getAccount(metadataPDA)) as any,
+      ),
     ).toMatchObject({
       mint: mintPDA.toString(),
       name: "USD Coin",
